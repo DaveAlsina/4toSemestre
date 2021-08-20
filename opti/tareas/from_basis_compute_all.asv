@@ -1,7 +1,4 @@
-function [mincost, replace_indx, exit_code] = from_basis_compute_all(basis, b, c, Ib, In)
-    
-    exit_code = -1; %código de salida cuando el problema tiene un error o no se puede 
-                    %resolver  
+function [mincost, replace_indx] = from_basis_compute_all(basis, b, c, Ib, In)
     
     %% Creación de todas las variables necesarias
     %matriz básica
@@ -56,4 +53,5 @@ function [mincost, replace_indx, exit_code] = from_basis_compute_all(basis, b, c
         %obtiene el índice de la variable que se volvió cero
         [, replace_indx] = find(xb == 0);
     end
+    
 end
