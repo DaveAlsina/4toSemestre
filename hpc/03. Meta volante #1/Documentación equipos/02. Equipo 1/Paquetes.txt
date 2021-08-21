@@ -1,0 +1,9 @@
+#Infinband
+dnf install cmake
+dnf install epel-release
+#Munge
+dnf install openssh zlib
+#Slurm
+dnf install lz4 hwloc zlib  dnf install -y perl-devel dnf install numad numactl-libs numactl-devel numactl numatop
+#Optimización de compilación dnf install -y perl-Switch para mpitune_fast
+dnf install -y lm_sensors
