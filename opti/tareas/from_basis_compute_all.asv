@@ -1,4 +1,7 @@
-function [mincost, replace_indx] = from_basis_compute_all(basis, b, c, Ib, In)
+function [mincost, replace_indx, exit_code] = from_basis_compute_all(basis, b, c, Ib, In)
+    
+    exit_code = -1; %código de salida cuando el problema tiene un error o no se puede 
+                    %resolver  
     
     %% Creación de todas las variables necesarias
     %matriz básica
@@ -9,7 +12,9 @@ function [mincost, replace_indx] = from_basis_compute_all(basis, b, c, Ib, In)
     B_ = inv(B);
     
     %soluciones basicas
-    xb = B_ * b;
+    %xb = B_ * b;
+    xb = B\b;
+    
         
     %vector de la solución
     x(Ib) = xb;
@@ -19,10 +24,12 @@ function [mincost, replace_indx] = from_basis_compute_all(basis, b, c, Ib, In)
     %% ¿es óptima la solución?
     
     %costos reducidos
-    Cj = c(:,In) - c(:,Ib)*B_*N;
-    
+    %Cj = c(:,In) - c(:,Ib)*B_*N;
+    Cj = c(:,In) - c(:,Ib)*(B\N);
+    disp()
     %función objetivo
     fo = c.*x;
+    disp(fo);
     
     %valor del costo reducido mínimo, y su respectivo índice
     [mincost, k] = min(Cj);
@@ -51,7 +58,6 @@ function [mincost, replace_indx] = from_basis_compute_all(basis, b, c, Ib, In)
         xb = xb - (y_k * x_k_min);
         
         %obtiene el índice de la variable que se volvió cero
-        [, replace_indx] = find(xb == 0);
+        replace_indx = find(xb == 0);
     end
-    
 end
