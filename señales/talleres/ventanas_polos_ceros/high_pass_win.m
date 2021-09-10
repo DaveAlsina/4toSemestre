@@ -22,6 +22,6 @@ function [H] = high_pass_win(w, poles, zeros)
         num = (jw - zeros(z)).*(jw - conj( zeros(z) )).* num;
     end
    
-    H = num./den;
+    H = (num./den);
     H = H./max(abs(H));
 end

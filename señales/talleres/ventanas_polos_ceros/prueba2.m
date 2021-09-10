@@ -12,43 +12,24 @@ y = sin(2*pi*t);        %señal sinusoidal
 w = f*2*pi;             %vector omega, de frecuencias angulares
 epsilon = 0.00000000001;
 
-realPart = [ log(linspace(0, 800, 10) + epsilon) ] 
-zeros = [ linspace(0, 800, 10)*2*pi ].*1i - realPart; 
+dist_max = 600;
+realPart1 = [ log(linspace(0, dist_max, 20) + epsilon) ]; 
+zeros1 = [ linspace(0, dist_max, 20)*2*pi ].*1i - realPart1; 
 
+H_H1 = high_pass_win(w, 1, zeros1);
+plot_all_about_win(f, t, H_H1);
 
+%% Hechura del pasabajas
 
-H_H = high_pass_win(w, 1, zeros)
+realPart2 = [ log(linspace(3000-dist_max, 3000, 30) + epsilon) ]; 
+zeros2 = [ linspace(3000-dist_max, 3000, 30)*2*pi ].*1i - realPart2; 
 
+H_H2 = high_pass_win(w, 1, zeros2);
+plot_all_about_win(f, t, H_H2);
 
-%% 
+%% Filtro pasa bandas
 
-%plot de la magnitud en frecuencia
-%plot de 2 filas 4 columnas donde para este plot
-%en particular se toma la primera y la segunda celda
-figure, subplot(2,4, [1 2])
-semilogy(f, abs(H_H))
-grid on
-xlabel('Freq [Hz]')
-ylabel('Amplitud [u.a.]') %unidades arbitrarias
+H_H = (H_H1.*H_H2).*1000000000000000000;
+H_H = H_H./max(abs(H_H));
+plot_all_about_win(f, t, H_H);
 
-%plot del angulo de la frecuencia
-%para este plot en particular se toma la 3ra y la 4ta celda
-subplot(2,4, [3 4])
-plot(f, angle(H_H))
-grid on
-xlabel('Freq [Hz]')
-ylabel('Angulo [u.a.]') %unidades arbitrarias
-
-%Generar respuesta en frecuencia completa del filtro
-L_H_C = [H_H(1:end-1) conj( fliplr(H_H(2:end)) ) ]; %flip left to right
-    
-%Obtener la respuesta al impulso 
-l_h = real(ifft(L_H_C));    %por errores numéricos la ifft no es puramente real 
-                            %por lo tanto se le saca la parte real
-                                
-%para este plot en particular se toma la 6ta y la 7tima celda
-subplot(2, 4, [6 7])
-plot(t(1:end/2), l_h(1:end/2))      %por la simetría la señal se puede cortar a la mitad
-grid on
-xlabel('time [s]')
-ylabel('Amplitud [u.a.]') %unidades arbitrarias
