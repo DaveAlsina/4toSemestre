@@ -22,14 +22,14 @@ plot_all_about_win(f, t, H_H1);
 %% Hechura del pasabajas
 
 realPart2 = [ log(linspace(3000-dist_max, 3000, 30) + epsilon) ]; 
-zeros2 = [ linspace(3000-dist_max, 3000, 30)*2*pi ].*1i - realPart2; 
+zeros2 = [ linspace(3000-dist_max, 3000, 30)*2*pi ].*1i %- realPart2; 
 
 H_H2 = high_pass_win(w, 1, zeros2);
 plot_all_about_win(f, t, H_H2);
 
 %% Filtro pasa bandas
 
-H_H = (H_H1.*H_H2).*1000000000000000000;
+H_H = (H_H1.*H_H2);
 H_H = H_H./max(abs(H_H));
 plot_all_about_win(f, t, H_H);
 
