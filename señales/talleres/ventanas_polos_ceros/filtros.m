@@ -58,7 +58,7 @@ ylabel('Amplitud [u.a.]') %unidades arbitrarias
 
 %% Obtener salida del sistema
 
-Y3 = fft(y);      %necesito el espectro de fourier para filtrarle las freqs
+Y3 = fft(y);       %necesito el espectro de fourier para filtrarle las freqs
 YF3 = H_H_C .* Y3; %salida del filtro
 
 %obtiene la señal filtrada
