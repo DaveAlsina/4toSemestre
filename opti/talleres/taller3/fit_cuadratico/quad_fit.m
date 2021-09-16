@@ -9,7 +9,7 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
   
     npoints = (interval(2) - interval(1))*100; 
     lambda1 = interval(1);                       %punto inicial (extremo izquierdo)
-    lambda2 = lambda1 + abs(interval(1)).*0.618; %segundo punto arbitrariamente colocado
+    lambda2 = lambda1 + 0.618; %abs(interval(1)).*0.618; %segundo punto arbitrariamente colocado
     lambda3 = 0;                                 %se inicializa lambda3 para su asignación
    
     if f(lambda2) >= f(lambda1)
@@ -46,7 +46,7 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
             legend('funcion', 'lambda1', 'lambda2', 'lambda3')
             title('busqueda de la condicion de los 3 puntos')
             hold off
-            pause(1);
+            pause(0.1);
             
         end
         
@@ -80,7 +80,7 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
             legend('funcion', 'lambda1', 'lambda2', 'lambda3')
             title('busqueda de la condicion de los 3 puntos')
             hold off
-            pause(1);
+            pause(0.1);
            
         end
         
@@ -98,11 +98,14 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
     
 %% Una vez satisfecha la condición de los 3 puntos
 
-    b_ij = @(i,j) lambda(i).^2 - lambda(j).^2;
-    a_ij = @(i,j) lambda(i) - lambda(j);
+    %b_ij = @(i,j) lambda(i).^2 - lambda(j).^2;
+    %a_ij = @(i,j) lambda(i) - lambda(j);
 
-    while (lambda3 - lambda1) > epsilon
-         
+    while abs(lambda(3) - lambda(1)) > epsilon
+ 
+        b_ij = @(i,j) lambda(i).^2 - lambda(j).^2;
+        a_ij = @(i,j) lambda(i) - lambda(j);
+        
         %se encuentra el minimizador de la función cuadrática que pasa por los 
         %puntos dados en el vector lambda
 
@@ -110,33 +113,33 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
         lambda_min = lambda_min ./ ( 2 .* ( [a_ij(2,3) a_ij(3,1) a_ij(1,2)] * f(lambda)') );
         
         %condicional 1
-        if lambda_min > lambda2
+        if lambda_min > lambda(2)
             
             disp("condicional 1")
-            if f(lambda_min) > f(lambda2)
-                lambda = [lambda1 lambda2 lambda_min];
+            if f(lambda_min) > f(lambda(2))
+                lambda = [lambda(1) lambda(2) lambda_min];
             else 
-                lambda = [lambda2 lambda_min lambda3];
+                lambda = [lambda(2) lambda_min lambda(3)];
             end
 
         %condicional 2
-        elseif lambda_min < lambda2
+        elseif lambda_min < lambda(2)
             
             disp("condicional 2")
-            if f(lambda_min) > f(lambda2)
-                lambda = [lambda_min lambda2 lambda3];
+            if f(lambda_min) > f(lambda(2))
+                lambda = [lambda_min lambda(2) lambda(3)];
             else 
-                lambda = [lambda1 lambda_min lambda2];
+                lambda = [lambda(1) lambda_min lambda(2)];
             end
 
         %condicional 3
         else
             
             disp("condicional 3")
-            if (lambda2 - lambda1) < (lambda3 - lambda2)
-                lambda_min = lambda2 + epsilon./2;
+            if abs(lambda(2) - lambda(1)) < abs(lambda(3) - lambda(2))
+                lambda_min = lambda(2) + epsilon./2;
             else
-                lambda_min = lambda2 - epsilon./2;
+                lambda_min = lambda(2) - epsilon./2;
             end
             
         end
@@ -148,14 +151,14 @@ function [lambda_min] = quad_fit(f, interval, epsilon)
         
         clf;
         hold on
-         plot(linspace(interval(1), interval(2), npoints ), f(linspace(interval(1), interval(2), npoints )) )
+        plot(linspace(interval(1), interval(2), npoints ), f(linspace(interval(1), interval(2), npoints )) )
         scatter(lambda(1), f(lambda(1)), 'bo')
         scatter(lambda(2), f(lambda(2)), 'kx')
         scatter(lambda(3), f(lambda(3)), 'ro')
         legend('funcion', 'lambda1', 'lambda2', 'lambda3')
         title('busqueda de optimo')
         hold off
-        pause(1);
+        pause(0.1);
         
     end
 

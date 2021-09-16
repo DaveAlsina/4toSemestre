@@ -1,10 +1,17 @@
+%% version larga prueba
+
 f = @(x) ((x).^2)./10 - 2.*sin(x);             
-interval = [-3 5];
+interval = [-1 4];
 i = 0.001;
 
-%plot(linspace(-5,5,100), f(linspace(-5,5,100)))
-%[1 2 3 4] * f([1 2 3 4])'
-%%
-quad_fit(f, [-1 4] ,i);
+
+quad_fit(f, [-1 4], i);
 
 
+%% version clase, prueba
+
+f = @(x) ((x).^2)./10 - 2.*sin(x);             
+interval = [-1 4];
+i = 0.001;
+
+quad_fit_version_clase(f, [-1 4], [0 1 4], i);
