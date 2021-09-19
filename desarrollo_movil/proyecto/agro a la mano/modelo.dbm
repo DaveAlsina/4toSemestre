@@ -14,7 +14,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="usuario" layer="0" collapse-mode="1" max-obj-count="6">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="402" y="320"/>
+	<position x="394" y="337"/>
 	<column name="id_usuario" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -35,10 +35,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="mensaje" layer="0" collapse-mode="2" max-obj-count="8">
+<table name="mensaje" layer="0" collapse-mode="2" max-obj-count="9">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="898" y="266"/>
+	<position x="958" y="281"/>
 	<column name="id_mensaje" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -46,6 +46,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="serial" length="0"/>
 	</column>
 	<column name="texto" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="tematicas" not-null="true">
 		<type name="varchar" length="0"/>
 	</column>
 	<column name="valoracion">
@@ -90,9 +93,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.mensaje" reference-fk="id_respuesta_a_msg"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1212.88" y="344.917"/>
-	<position x="1212.88" y="243"/>
-	<position x="1092.59" y="243"/>
+		<position x="1272.88" y="366.117"/>
+	<position x="1272.88" y="258"/>
+	<position x="1152.59" y="258"/>
 	</line>
 </relationship>
 
