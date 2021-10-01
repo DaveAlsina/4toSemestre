@@ -60,15 +60,15 @@ function [xk2] = newton_multidim(f, x, x0, epsilon, verbose)
         disp(xk2);
         disp('   ');
         
-        disp('distancia entre la solución anterior y la actual: ');
-        disp(double(norm( xk2 - xk )));
+        disp('valor del gradiente en x_{k+1} ');
+        disp(double( norm( subs(gradf, x, xk2') ) ));
     end
     
-    
+
     %% Continua las iteraciones
 
     
-    while  double(norm( xk2 - xk ))  >= epsilon
+    while  double( norm( subs(gradf, x, xk2') ) )  >= epsilon
         
         
         xk_assist = xk2;
@@ -100,8 +100,8 @@ function [xk2] = newton_multidim(f, x, x0, epsilon, verbose)
             disp(xk2);
             disp('   ');
             
-            disp('distancia entre la solución anterior y la actual: ');
-            disp(double(norm( xk2 - xk )));
+            disp('valor del gradiente en x_{k+1} ');
+            disp(double( norm( subs(gradf, x, xk2') ) ));
         end
         
     end

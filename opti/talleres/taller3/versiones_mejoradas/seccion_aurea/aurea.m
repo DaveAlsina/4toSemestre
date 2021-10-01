@@ -42,6 +42,8 @@ function [a, b] = aurea(init_a, init_b, I, fun_obj, verbose, graphical_mod)
             scatter(b, fun_obj(b), 'go')
             scatter(lambda, fun_obj(lambda), 'rx')
             scatter(mi, fun_obj(mi), 'kx')
+            title('Algoritmo sección aurea');
+            legend('función objetivo' , 'a', 'b', 'lambda', 'mu');
             hold off
             pause(1)
             
