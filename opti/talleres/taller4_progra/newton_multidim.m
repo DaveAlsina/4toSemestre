@@ -37,11 +37,22 @@ function [xk2] = newton_multidim(f, x, x0, epsilon, verbose)
         disp(['        Iteración número ' num2str(counter) ' ']);
         disp('*****************************************');
 
+        disp('El gradiente de f es: ');
+        disp(gradf);
+        
+        disp('El Hessiano de f es: ');
+        disp(hessianf);
+        
+        disp('La inversa del Hessiano de f es: ');
+        disp(invHessianf);
+        disp('--------------------------------------');
+        
+        
         disp('x_{k}: ');
         disp(xk);
-        disp('Hessiana inversa evaluada: ');
+        disp('Hessiana inversa evaluada en x{k}: ');
         disp(hessianainv_evaluada);
-        disp('Gradiente de f evaluado en x{k}');
+        disp('Gradiente de f evaluado en x{k}: ');
         disp(gradf_evaluado);
 
 
@@ -79,9 +90,9 @@ function [xk2] = newton_multidim(f, x, x0, epsilon, verbose)
             
             disp('x_{k}: ');
             disp(xk);
-            disp('Hessiana inversa evaluada: ');
+            disp('Hessiana inversa evaluada en x{k}: ');
             disp(hessianainv_evaluada);
-            disp('Gradiente de f evaluado en x{k}');
+            disp('Gradiente de f evaluado en x{k}: ');
             disp(gradf_evaluado);
             
             
