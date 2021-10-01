@@ -1,6 +1,7 @@
 function [lambda_min] = quad_fit(f, interval, lambda, epsilon) 
 %% Una vez satisfecha la condición de los 3 puntos
 
+    %variable usada para poner la cantidad de puntos a usar en graficación
     npoints = (interval(2) - interval(1))*100; 
 
     while abs(lambda(3) - lambda(1)) > epsilon

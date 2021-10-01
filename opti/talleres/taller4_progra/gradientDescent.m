@@ -26,6 +26,15 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
                                      %mandar como parámetro a una symsfunc    
     xprev_double = xstart;
     
+    if verbose == 1
+       disp('El gradiente de f es: ');
+       disp(gradf);
+       disp('La posición inicial es: ');
+       disp(xprev_double);
+       disp('---------------------------------------------------------');
+       disp('                   ');
+    end
+    
     %% primera iteración
     
     % evalua el gradiente en el punto inicial dado y toma la dirección
@@ -54,17 +63,41 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
     f_lambda = f(w{:}); % en particular aquí pasa cada celda del 'vector'
                         % que corresponde la primera a x1*lambda por ejemplo
     
-    lambdak = metodo_newton(f_lambda, lambda, epsilon, 10, interval, max_iters/2, verbose);
+            
+    if verbose == 1 
+            lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, false);
+    else
+            lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, true);
+    end                       
+                        
+    
     
     % vea que se retorna un vector 
     lambdak = double(lambdak);
     
     xprev_double = xprev_double + lambdak*directionk;
     xprev_cell = sym2cell( sym(xprev_double) );
-    
-    %% iteración del loop
-    
+
     counter = 1;
+    
+    %nivel 1 de verbosidad (solo displays en consola)
+    if verbose == 1
+        disp(['Iteración número [' num2str(counter) '] ']);
+        disp('Se optimizó siguiendo la dirección contraria al gradiente: ');
+        disp(directionk);
+        disp('El tamaño de paso en dicha dirección es: ');
+        disp(lambdak);
+        disp('La nueva ubicación es: ');
+        disp(xprev_double);
+        disp(['El error es de: ' num2str(double(normGradf(xprev_cell{:}))) ' ']);
+        disp('---------------------------------------------------------');
+        disp('                   ');
+    end
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%    iteración del loop %%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     while  (double(normGradf(xprev_cell{:}) > epsilon)) && (counter < max_iters)
 
         directionk = - double( gradf(xprev_cell{:}) );
@@ -76,8 +109,12 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
         % syms 'lambda'
         f_lambda = f(w{:});
         
-        lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, verbose);
-    
+        if verbose == 1 
+            lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, false);
+        else
+            lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, true);
+        end
+            
         % vea que se retorna un vector 
         lambdak = double(lambdak);
         
@@ -85,6 +122,21 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
         xprev_cell = sym2cell( sym(xprev_double) );
         
         counter = counter + 1;
+        
+        %nivel 1 de verbosidad (solo displays en consola)
+        if verbose == 1
+            disp(['Iteración número [' num2str(counter) '] ']);
+            disp('Se optimizó siguiendo la dirección contraria al gradiente: ');
+            disp(directionk);
+            disp('El tamaño de paso en dicha dirección es: ');
+            disp(lambdak);
+            disp('La nueva ubicación es: ');
+            disp(xprev_double);
+            disp(['El error es de: ' num2str(double(normGradf(xprev_cell{:}))) ' ']);
+            disp('---------------------------------------------------------');
+            disp('                   ');
+        end
+
     end
 
 
