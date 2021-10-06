@@ -34,13 +34,14 @@ title('MFCCs')
 %%
 
 F = repelem([1 2], [99]);
+F = categorical(F)';
 
 %%
 
 
 
 %%
-[B,dev,stats] = mnrfit(coeffs, F');
+[B,dev,stats] = mnrfit(coeffs, F);
 
 
 
