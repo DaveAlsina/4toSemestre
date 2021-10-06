@@ -1,4 +1,4 @@
-recObj = audiorecorder;
+recObj = audiorecorder(16000, 24, 1);
 fs = recObj.SampleRate; % Extrayendo la frecuencia de muestreo del objeto de grabación.
 time =2;
 recordblocking(recObj, time);
@@ -9,14 +9,20 @@ datosGrabacion = datosGrabacion ./ max(datosGrabacion);
 
 %%
 
-filename = '123.wav';
+% El amor es una locura que ni el cura cura,que si el cura lo cura es una locura del cura.
+% Pablito clavó un clavito; ¿qué clavito clavó Pablito?
+% El viejo cangrejo se quedó perplejo al ver su viejo reflejo en aquel espejo
+% El Otorrinolaringólogo trabaja en la otorrinolaringología.
+% 
+
+filename = 'yo_dave.wav';
 audiowrite(filename, datosGrabacion, fs);
 
 %%
 
 % probar el audio
 sound(datosGrabacion,fs);
-
+%%
 % procesar la información
 n = length(datosGrabacion);
 t = (0:n-1)/fs;
