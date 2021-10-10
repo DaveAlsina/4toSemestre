@@ -1,0 +1,19 @@
+\documentclass{article}
+\pagenumbering{gobble}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+\begin{align*}
+z_{1} &= 0 + i, \textit{ ahora observemos los valores que toma } z_1  \textit{:}
+\end{align*}
+
+\begin{align*}
+z_{1}\cdot i &= i \cdot (0 + i) = i^{2} = -1\\
+z_{1}\cdot i^2 &= i^2 \cdot (0 + i) = i^{3} = (-1)i = -i\\
+z_{1}\cdot i^3 &= i^3 \cdot (0 + i) = i^{4} = (-1)(-1) = 1\\
+z_{1}\cdot i^4 &= i^4 \cdot (0 + i) = i^{5} = (1)i = i\\
+\end{align*}
+
+\end{document}

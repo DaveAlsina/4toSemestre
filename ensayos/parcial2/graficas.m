@@ -5,8 +5,8 @@ num = [(2 + 1.*1i), (2.5 + (3/2).*1i)];
 plot(num, 'bo')
 grid on
 title('\emph{\textbf{Plano Complejo}}', 'Interpreter', 'latex')
-xlabel('\textbf{Re}  \textit{(parte real)}','Interpreter','latex')
-ylabel('\textbf{Im}  \textit{(parte imaginaria)}','Interpreter','latex')
+xlabel('\textbf{Re}  \textit{(parte real)}', 'Interpreter','latex')
+ylabel('\textbf{Im}  \textit{(parte imaginaria)}', 'Interpreter','latex')
 legend('números complejos');
 
 
@@ -28,6 +28,22 @@ title('\textbf{\emph{Plano polar}}', 'Interpreter','latex')
 legend('\textit{Version polar numeros complejos}', 'Interpreter', 'latex')
 
 
+
+%% posiciones de i elevado a su propia potencia
+
+num = [1i.^1 1i.^2 1i.^3 1i.^4];
+
+hold on
+plot(num(1), 'ro')
+plot(num(2), 'go')
+plot(num(3), 'bo')
+plot(num(4), 'bo')
+grid on
+title('\emph{\textbf{Plano Complejo}}', 'Interpreter', 'latex')
+xlabel('\textbf{Re}  \textit{(parte real)}', 'Interpreter','latex')
+ylabel('\textbf{Im}  \textit{(parte imaginaria)}', 'Interpreter','latex')
+legend('$i$', '$i^2$', '$i^3$', '$i^4$', 'Interpreter','latex');
+hold off
 
 
 %% fuentes:
