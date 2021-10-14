@@ -1,0 +1,204 @@
+// Find Word In List 
+// by: Dave Alsina
+// for Turing Machine Simulator 
+// turingmachinesimulator.com
+// by Pedro Aste - ppaste@uc.cl
+
+name: Find Word In List 
+init: qCopy
+accept: qAccept
+
+//STRINGS DE TEST:
+//1100#00X110X0011X1100		-> ACCEPT
+//1100#00X110X0011X110		-> REJECT
+//1#00X0X1			-> ACCEPT
+//1#00X0X010			-> REJECT
+//0#00X0X010			-> ACCEPT
+//010#01X101X011X010		-> ACCEPT
+//0#1X11X00			-> REJECT
+//1#01X11X00			-> REJECT
+
+//copia la primera cinta en la segunda
+qCopy,0,_ 
+qCopy,0,0,>,>
+
+qCopy,1,_ 
+qCopy,1,1,>,>
+
+qCopy,X,_ 
+qCopy,X,X,>,>
+
+qCopy,#,_ 
+qCopy,#,#,>,>
+
+qCopy,_,_ 
+qGoToBegginingGeneral,_,_,<,<
+
+//se regresa al principio tas copiarla
+
+qGoToBegginingGeneral,0,0 
+qGoToBegginingGeneral,0,0,<,<
+
+qGoToBegginingGeneral,1,1 
+qGoToBegginingGeneral,1,1,<,<
+
+qGoToBegginingGeneral,#,# 
+qGoToBegginingGeneral,#,#,<,<
+
+qGoToBegginingGeneral,X,X 
+qGoToBegginingGeneral,X,X,<,<
+
+qGoToBegginingGeneral,_,_ 
+qFind#2Band,_,_,>,>
+
+//Encuentra el # en la segunda banda
+
+qFind#2Band,0,0
+qFind#2Band,0,0,-,>
+
+qFind#2Band,1,1
+qFind#2Band,1,1,-,>
+
+qFind#2Band,1,0
+qFind#2Band,1,0,-,>
+
+qFind#2Band,0,1
+qFind#2Band,0,1,-,>
+
+qFind#2Band,1,#
+qGoToBegginningBand1,1,#,-,>
+
+qFind#2Band,0,#
+qGoToBegginningBand1,0,#,-,>
+
+//regresa la banda 1 al principio de la palabra
+
+qGoToBegginningBand1,#,1
+qGoToBegginningBand1,#,1,<,-
+
+qGoToBegginningBand1,#,0
+qGoToBegginningBand1,#,0,<,-
+
+qGoToBegginningBand1,#,X
+qGoToBegginningBand1,#,X,<,-
+
+qGoToBegginningBand1,1,X
+qGoToBegginningBand1,1,X,<,-
+
+qGoToBegginningBand1,0,X
+qGoToBegginningBand1,0,X,<,-
+
+qGoToBegginningBand1,1,1
+qGoToBegginningBand1,1,1,<,-
+
+qGoToBegginningBand1,0,0
+qGoToBegginningBand1,0,0,<,-
+
+qGoToBegginningBand1,0,1
+qGoToBegginningBand1,0,1,<,-
+
+qGoToBegginningBand1,1,0
+qGoToBegginningBand1,1,0,<,-
+
+qGoToBegginningBand1,_,0
+qCompare,_,0,>,-
+
+qGoToBegginningBand1,_,1
+qCompare,_,1,>,-
+
+//En caso de que los números en la banda no sean los mismos
+//pasa al estado de ir a la siguiente palabra en la 2da banda
+//para después regresar al principio de la primera banda
+
+// caso de continuar la comparación
+qCompare, 1, 1
+qCompare, 1, 1, >, >
+
+qCompare, 0, 0 
+qCompare, 0, 0, >, >
+
+// caso de aceptación, se llega al final de las palabras sin problemas
+qCompare, #, X 
+qAccept, #, X, -, -
+
+qCompare, #, _ 
+qAccept, #, _, -, -
+
+// caso de detener la comparación y pasar a la siguiente palabra
+
+qCompare, #, 0 
+qGoNextWord, #, 0, >, >
+
+qCompare, #, 1 
+qGoNextWord, #, 1, >, >
+
+qCompare, 0, 1 
+qGoNextWord, 0, 1, >, >
+
+qCompare, 1, 0 
+qGoNextWord, 1, 0, >, >
+
+qCompare, 1, X
+qGoNextWord, 1, X, >, >
+
+qCompare, 0, X
+qGoNextWord, 0, X, >, >
+
+//caso en que se acaban las palabras para comparar y no se ha 
+//aceptado nada, entonces paila
+qCompare, 0, _
+qPAILAAA, 0, _, -, -
+
+qCompare, 1, _
+qPAILAAA, 1, _, -, -
+
+qCompare, _, _
+qPAILAAA, _, _, -, -
+
+
+//va a la siguiente palabra en la banda 2
+
+qGoNextWord, 0, 0
+qGoNextWord, 0, 0, -, >
+
+qGoNextWord, 0, 1
+qGoNextWord, 0, 1, -, >
+
+qGoNextWord, 1, 0
+qGoNextWord, 1, 0, -, >
+
+qGoNextWord, 1, 1
+qGoNextWord, 1, 1, -, >
+
+qGoNextWord, #, 0
+qGoNextWord, #, 0, -, >
+
+qGoNextWord, #, 1
+qGoNextWord, #, 1, -, >
+
+qGoNextWord, #, X
+qGoToBegginningBand1, #, X, -, >
+
+qGoNextWord, 1, X
+qGoToBegginningBand1, 1, X, -, >
+
+qGoNextWord, 0, X
+qGoToBegginningBand1, 0, X, -, >
+
+
+//si va en busca de la siguiente palabra pero se acabaron 
+//las palabras de la lista entonces rechace
+qGoNextWord, #, _
+qPAILAAA, #, _, -, -
+
+qGoNextWord, 1, _
+qPAILAAA, 1, _, -, -
+
+qGoNextWord, 0, _
+qPAILAAA, 0, _, -, -
+
+
+
+
+
+
