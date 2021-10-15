@@ -1,19 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'test.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final FirebaseApp app = await Firebase.initializeApp();
 
   runApp(MaterialApp(
-    home:MyApp(app: app,)
+    home:MyApp(app: app)
   ));
+
 }
 
 
 class MyApp extends StatelessWidget {
+
   MyApp({Key? key, required this.app}) : super(key: key);
   final FirebaseApp app;
 
@@ -23,5 +24,6 @@ class MyApp extends StatelessWidget {
       home: CustomData(app: app),
     );
   }
+
 }
 

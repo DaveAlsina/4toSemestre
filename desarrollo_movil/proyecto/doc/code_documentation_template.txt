@@ -1,0 +1,40 @@
+//Template para comentarios de una función o método
+
+
+int funcioncita(int arg1, int arg2){
+
+/*
+
+	Input: 	-> arg1, (significado de la variable)
+		-> arg2, (significado de la variable)
+
+	Output:	-> out1, (significado de la variable ó utilidad)
+		
+	Descripción: 	(Qué hace la función a nivel general, el cómo lo hace 
+			debería irse aclarando a lo largo de los comentarios
+			dentro del código, aunque si se quiere también aquí se puede 
+			dar una explicación general del cómo funciona).
+*/
+
+}
+
+
+//Template de comentarios de una clase
+
+class clasecita {
+
+/*
+
+	Atributos:	-> attr1, (significado de la variable y para qué existe)
+			-> attr2, (significado de la variable y para qué existe)
+
+		
+	Descripción: 	(Qué hace/representa la clase a nivel general).
+
+	(para cada uno de los métodos que se implementen en la clase se aplica el template 
+	de comentado que se dejó más arriba).
+*/
+
+
+
+}
