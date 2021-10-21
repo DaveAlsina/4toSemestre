@@ -1,0 +1,139 @@
+//LOAD AN EXAMPLE TO TRY
+//then load an input and click play
+
+//Syntax:
+
+
+//-------DELTA FUNCTION:
+//[current_state],[read_symbol]
+//[new_state],[write_symbol],[>|<|-]
+
+// < = left
+// > = right
+// - = hold
+// use underscore for blank cells
+
+//States and symbols are case-sensitive
+
+//Load your code and click COMPILE.
+//or load an example (top-right).
+
+//-------CONFIGURATION
+//name: [name_of_machine]
+//init: [initial_state]
+//accept: [accept_state_1],... ,[accept_state_n]
+
+
+name: (a^i)(b^j)(c^k)
+init: qInit
+accept: qAccept
+
+//examples:
+//aabbcccc
+
+qInit, a
+qCheck1, a, >
+
+qCheck1, a
+qCheck1, a, >
+
+qCheck1, b
+qCheck2, b, >
+
+qCheck2, b
+qCheck2, b, >
+
+qCheck2, c
+qBackToBeginning, c, <
+
+//regresar al principio una vez checó que (a^+)(b^+)(c^+)
+
+qBackToBeginning, c
+qBackToBeginning, c, <
+
+qBackToBeginning, b
+qBackToBeginning, b, <
+
+qBackToBeginning, a
+qBackToBeginning, a, <
+
+qBackToBeginning, X
+qStartMamboJambo, X, >
+
+qBackToBeginning, _
+qStartMamboJambo, _, >
+
+//empieza el pasito perrón, la idea es quitar una 'a' por una 'X',
+//después todas las 'b' por una 'Y' del 
+
+qStartMamboJambo, a
+qfindBforward, X, >
+
+qfindBforward, a
+qfindBforward, a, >
+
+qfindBforward, b
+qfindEnd, Y, > 
+
+qfindEnd, b
+qfindEnd, b, >
+
+qfindEnd, c
+qfindEnd, c, >
+
+// si encuentra una Z o un '_' significa que encontró la ultima 
+// 'c' y que ya se puede devolver a borrar la 'c' anterior
+
+qfindEnd, Z
+qfindLastC, Z, <
+
+qfindEnd, _
+qfindLastC, _, <
+
+qfindLastC, c
+qfindYbackwards, Z, <
+
+// busca la 'Y' que corresponde a una 'b' que ha sido borrada, 
+// para así tomar otra 'b' en caso de que hallan y borrar otra 'c' denuevo
+
+qfindYbackwards, c
+qfindYbackwards, c, <
+
+qfindYbackwards, b
+qfindYbackwards, b, <
+
+qfindYbackwards, Y
+qfindBforward, Y, >
+
+// si buscando una 'b' encontré 'z' o 'c' quiere decir que agoté 
+// las b que habían luego debo reemplazar denuevo las 'Y' que puse 
+// por unas 'b' 
+
+qfindBforward, c
+qReplaceYs, c, <
+
+qReplaceYs, Y
+qReplaceYs, b, <
+
+qReplaceYs, a
+qBackToBeginning, a, <
+
+//si buscando una 'b' hacia adelante no la encuentra y en su lugar 
+//encuentra una 'Z' entonces quiere decir que ya agotó las 'c'
+//por lo que debe chequear que todo bien
+
+qfindBforward, Z
+qCheckAns, Z, <
+
+qCheckAns, Y
+qCheckAns, Y, <
+
+qCheckAns, X
+qCheckAns, X, <
+
+qCheckAns, _
+qAccept, _, -
+
+
+
+
