@@ -1,0 +1,128 @@
+//LOAD AN EXAMPLE TO TRY
+//then load an input and click play
+
+//Syntax:
+
+//-------CONFIGURATION
+name: numero de as distinto de numero de bs
+init: qFind_a 
+accept: qAccept
+
+//-------DELTA FUNCTION:
+//[current_state],[read_symbol]
+//[new_state],[write_symbol],[>|<|-]
+
+// < = left
+// > = right
+// - = hold
+// use underscore for blank cells
+
+//States and symbols are case-sensitive
+
+//Load your code and click COMPILE.
+//or load an example (top-right).
+
+//ejemplo:
+//aaabbbb	-> accept
+//aaaabbb	-> accept
+//aaaaabbb	-> accept
+//abababb	-> accept
+//bababaa	-> accept
+//abbaa		-> accept
+//aabba		-> accept
+//abbba		-> accept
+
+//aaabbb	-> reject
+//bbbaaa	-> reject
+//ababab	-> reject
+//bababa	-> reject
+//baab		-> reject
+//abba		-> reject
+
+
+//busco una a en la lista y la tacho para despues ir 
+//a tachar una b 
+qFind_a, b
+qFind_a, b, >
+
+qFind_a, X
+qFind_a, X, >
+
+qFind_a, a
+qGoToBeginningFor_b, X, <
+
+//va al principio para ir a tachar una b desde el principio
+
+qGoToBeginningFor_b, b
+qGoToBeginningFor_b, b, <
+
+qGoToBeginningFor_b, a
+qGoToBeginningFor_b, a, <
+
+qGoToBeginningFor_b, X
+qGoToBeginningFor_b, X, <
+
+qGoToBeginningFor_b, _
+qFind_b, _, >
+
+//busco una b en la lista y la tacho para despues ir 
+//a tachar una a
+
+qFind_b, a
+qFind_b, a, >
+
+qFind_b, X
+qFind_b, X, >
+
+qFind_b, b
+qGoToBeginningFor_a, X, <
+
+//va al principio para ir a tachar una a desde el principio
+
+qGoToBeginningFor_a, b
+qGoToBeginningFor_a, b, <
+
+qGoToBeginningFor_a, a
+qGoToBeginningFor_a, a, <
+
+qGoToBeginningFor_a, X
+qGoToBeginningFor_a, X, <
+
+qGoToBeginningFor_a, _
+qFind_a, _, >
+
+//si se va buscando a o b y se llega al final de la palabra
+//sin encontrarlo, entonces revise a ver si hay un 'ganador'
+
+qFind_a, _
+qCheckWinner_b, _, <
+
+qFind_b, _
+qCheckWinner_a, _, <
+
+//este proceso es para checar si hay más b 
+//para decidir si acepta o rechaza
+qCheckWinner_b, X
+qCheckWinner_b, X, <
+
+qCheckWinner_b, b
+qAccept, b, <
+
+qCheckWinner_b, a
+qAccept, a, <
+
+qCheckWinner_b, _
+qPAILAAA, _, <
+
+
+//este proceso es para checar si hay más a 
+//para decidir si acepta o rechaza
+qCheckWinner_a, X
+qCheckWinner_a, X, <
+
+qCheckWinner_a, a
+qAccept, a, -
+
+qCheckWinner_a, _
+qAccept, _, -
+

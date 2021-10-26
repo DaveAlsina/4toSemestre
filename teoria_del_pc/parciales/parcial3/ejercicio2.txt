@@ -1,0 +1,143 @@
+//LOAD AN EXAMPLE TO TRY
+//then load an input and click play
+
+//Syntax:
+
+//-------CONFIGURATION
+name: ejercicio as = 2 y bs = 3
+init: qFindFirst_a
+accept: qAccept
+
+//-------DELTA FUNCTION:
+//[current_state],[read_symbol]
+//[new_state],[write_symbol],[>|<|-]
+
+// < = left
+// > = right
+// - = hold
+// use underscore for blank cells
+
+//States and symbols are case-sensitive
+
+//Load your code and click COMPILE.
+//or load an example (top-right).
+
+
+//ejemplos de prueba:
+//aaabb ->reject 
+//bbaaa ->reject
+//babaa ->reject
+//ababb ->accept
+//bbbaa ->accept
+//aabbb ->accept
+
+
+//busca la primera 'a'
+
+qFindFirst_a, b
+qFindFirst_a, b, >
+
+qFindFirst_a, _
+qReject, _, -
+
+qFindFirst_a, a
+qFindSecond_a, X, >
+
+//busca la segunda 'a'
+qFindSecond_a, b
+qFindSecond_a, b, >
+
+qFindSecond_a, _
+qReject, _, -
+
+qFindSecond_a, a
+qFind_a_Overflow, X, >
+
+// mira si hay más 'a' de las esperadas
+
+qFind_a_Overflow, b
+qFind_a_Overflow, b, >
+
+qFind_a_Overflow, a
+qReject, X, -
+
+qFind_a_Overflow, _
+qGoToBeginnig, _, <
+
+//se regresa al principio para buscar las 'b'
+
+qGoToBeginnig, a
+qGoToBeginnig, a, <
+
+qGoToBeginnig, X
+qGoToBeginnig, X, <
+
+qGoToBeginnig, b
+qGoToBeginnig, b, <
+
+qGoToBeginnig, _
+qFindFirst_b, _, >
+
+//hace el proceso análogo al hecho con las 'a'
+//pero con un estado para contar la 3ra incurrencia de 'b'
+
+//busca la primera 'b'
+
+qFindFirst_b, a
+qFindFirst_b, a, >
+
+qFindFirst_b, X
+qFindFirst_b, X, >
+
+qFindFirst_b, _
+qReject, _, -
+
+qFindFirst_b, b
+qFindSecond_b, X, >
+
+//busca la segunda 'b'
+qFindSecond_b, a
+qFindSecond_b, a, >
+
+qFindSecond_b, X
+qFindSecond_b, X, >
+
+qFindSecond_b, _
+qReject, _, -
+
+qFindSecond_b, b
+qFindThird_b, X, >
+
+//busca la 3ra 'b'
+qFindThird_b, a
+qFindThird_b, a, >
+
+qFindThird_b, X
+qFindThird_b, X, >
+
+qFindThird_b, b
+qFind_b_Overflow, X, >
+
+// mira si hay más 'a' de las esperadas
+
+qFind_b_Overflow, a
+qFind_b_Overflow, a, >
+
+qFind_b_Overflow, X
+qFind_b_Overflow, X, >
+
+qFind_b_Overflow, b
+qReject, X, -
+
+qFind_b_Overflow, _
+qAccept, _, <
+
+
+
+
+
+
+
+
+
+
