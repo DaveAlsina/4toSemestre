@@ -44,10 +44,13 @@ class CustomBottomNavBar extends StatelessWidget {
             tooltip: 'Escribe una pregunta',
             icon: Icons_constants.WRITE_QUESTION_ICON,
             onPressed: () {
-              Navigator.push(
+              Get.toNamed('/QuestionPage');
+
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => QuestionPage()),
-              );
+              );*/
+
             },
           ),
 
@@ -67,12 +70,13 @@ class CustomBottomNavBar extends StatelessWidget {
             tooltip: 'Historial de preguntas',
             icon: Icons_constants.HISTORIAL_LIST_ICON,
             onPressed: () {
-              //Get.to(() => GetMaterialApp( home: QuestionHistoryPage() ));
-              Navigator.push(
+              Get.toNamed('/QuestionHistoryPage');
+
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => QuestionHistoryPage()),
-              );
-              //Navigator.push(context, );
+              );*/
+
             },
           ),
 
@@ -82,10 +86,13 @@ class CustomBottomNavBar extends StatelessWidget {
             tooltip: 'Ver perfil',
             icon: Icons_constants.PROFILE_ICON,
             onPressed: () {
-              Navigator.push(
+              Get.toNamed('/ProfilePage');
+
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage()),
-              );
+              );*/
+
             },
           ),
 

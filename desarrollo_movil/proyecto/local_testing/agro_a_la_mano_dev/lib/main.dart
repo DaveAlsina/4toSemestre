@@ -1,6 +1,7 @@
 import 'package:agro_a_la_mano_dev/controllers/authentication_controller.dart';
 import 'package:agro_a_la_mano_dev/pages/home_page.dart';
 import 'package:agro_a_la_mano_dev/pages/login_page.dart';
+import 'package:agro_a_la_mano_dev/pages/questionhist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:agro_a_la_mano_dev/stylingConstants/color_constants.dart'
     as Color_constants;
@@ -15,7 +16,32 @@ import 'package:get/get.dart';
 void main() {
   Get.put(HistoryController());
   Get.put(AuthenticationController());
-  runApp(HomePage());
+  runApp(GetMaterialApp(
+      home: HomePage(),
+      getPages: [
+
+        //pagina de pregunta
+        GetPage(
+          name: '/QuestionPage',
+          page: () => QuestionPage(),
+          transition: Transition.leftToRight,
+        ),
+
+        GetPage(
+          name: '/QuestionHistoryPage',
+          page: () => QuestionHistoryPage(),
+          transition: Transition.leftToRight,
+        ),
+
+        GetPage(
+          name: '/ProfilePage',
+          page: () => ProfilePage(),
+          transition: Transition.leftToRight,
+        ),
+
+      ],
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
