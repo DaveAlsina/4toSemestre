@@ -14,7 +14,6 @@ C = [5 4 2 4 0 0 0 0];
 At = 20;
 
 % numero de cultivos 
-
 n = 4;
 
 % recuerde las restricciones sobre
