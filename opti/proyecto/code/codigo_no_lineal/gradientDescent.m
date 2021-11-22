@@ -24,10 +24,9 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
     xprev_cell = num2cell(xstart);   %convierte a xstart a una celda 
                                      %que si se puede 
                                      %mandar como parámetro a una symsfunc    
-    disp(xprev_cell);
     xprev_double = xstart';
     
-    if verbose == 1
+    if verbose >= 1
        disp('El gradiente de f es: ');
        disp(gradf);
        disp('La posición inicial es: ');
@@ -68,7 +67,7 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
     if (verbose == 1) || (verbose == 0) 
             lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, false);
                
-    else
+    elseif (vebose > 1)
             lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, true); 
     end
                         
@@ -114,7 +113,8 @@ function [xprev_double] = gradientDescent(x, f, xstart, epsilon, interval, max_i
         
         if (verbose == 1) || (verbose == 0) 
             lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, false);
-        else
+        
+        elseif (vebose > 1)
             lambdak = metodo_newton(f_lambda, lambda, epsilon, 0.5, interval, max_iters/2, true);
         end
             

@@ -1,6 +1,6 @@
 function [x] = metodo_penalizacion(f_objetivo,f_eq, f_ineq, var, xstart, epsilon, interval, max_iters,verbose)
 
-    p = 999999;
+    p = 10000000;
 
     penalize_eq = 0;
     for i = 1:length(f_eq)
