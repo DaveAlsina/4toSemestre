@@ -16,8 +16,8 @@ assume(x>=1);
 % I = [cerezos, aguacate, mango, durazno]
 % C = [cerezos, aguacate, mango, durazno]
 
-I = [400 500 200  400];
-C = [20  50   10  18 ];
+I = [400  500  200  400];
+C = [20   50   10   18];
 
 % H es la función de ingresos del hummus
 % (acá asumimos que no tiene costo alguno el hacer hummus)
@@ -26,6 +26,7 @@ H = 0;
 % el vector fila v es un factor de escalamiento de los ingresos 
 % de hummus para cierto tipo de cultivo, es como decir: 
 % el arbol de mangos me da más hummus que el de duraznos
+% [cerezos, aguacate, mango, durazno]
 v = [2 1 3 2];
 
 for i = 1:n
@@ -67,10 +68,10 @@ end
 eq_constrain = [];
 
 for i = 1:n
-   eq_constrain = [eq_constrain (x(i).*((r(i) + r(i)./10).^2).*pi) - sym(At)];
+   eq_constrain = [eq_constrain (x(i).*((r(i) + r(i)./10).^2).*pi)];
 end
 
-eq_constrain = [ sum(eq_constrain) ]; 
+eq_constrain = [ sum(eq_constrain)  - sym(At) ]; 
 
 %% Corrido del algoritmo 
 
@@ -124,8 +125,12 @@ end
 
 disp('El vector óptimo para maximizar ganancias dadas las restricciones es: ');
 disp(result(:, curr_max_idx))
-disp('El valor de la función objetivo es : ')
+disp('El valor de la función objetivo es: ')
 disp(curr_max_val);
+disp('El valor del area ocupada con esta variable: ')
+disp((((r + r./10).^2).*pi)*result(:, curr_max_idx));
+disp('El area máxima posible es: ');
+disp(At);
 
 
 %% si quiere puede comparar con la versión Serial  

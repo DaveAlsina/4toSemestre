@@ -1,0 +1,50 @@
+//LOAD AN EXAMPLE TO TRY
+//then load an input and click play
+
+//Syntax:
+
+//-------CONFIGURATION
+name: Even Number of Zeros 7w7
+init: qFindFirst0
+accept: qAccept
+
+//-------DELTA FUNCTION:
+//[current_state],[read_symbol]
+//[new_state],[write_symbol],[>|<|-]
+
+// EJEMPLOS
+// 00000 	-> REJECT
+// 010101 	-> REJECT
+
+
+// 111111	-> ACCEPT (HAY CERO CEROS, CERO ES PAR)
+// 01111110	-> ACCEPT
+// 00100 	-> ACCEPT
+
+// busca el primer cero para borrarlo
+qFindFirst0, 0
+qFindSecond0, X, >
+
+qFindFirst0, 1
+qFindFirst0, 1, >
+
+// tras encontrar el primer cero, busca el segundo para borrarlo 
+// si no lo encuentra rechaza
+
+qFindSecond0, _
+qPAILAAAA, _, -
+
+qFindSecond0, 1
+qFindSecond0, 1, >
+
+qFindSecond0, 0
+qFindFirst0, X, >
+
+// si encuentra el segundo cero repite el proceso de buscar un primero
+// solo que esta vez se tiene en cuenta que si se llega al final 
+// cuando se está buscando un primer cero, se acepta
+
+qFindFirst0, _
+qAccept, _, -
+
+

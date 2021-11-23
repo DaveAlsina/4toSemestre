@@ -1,7 +1,8 @@
 function [x] = metodo_penalizacion(f_objetivo,f_eq, f_ineq, var, xstart, epsilon, interval, max_iters,verbose)
 
-    p = 10000000;
-
+    %p = 10000000000000000000;
+    p = 100000;
+    
     penalize_eq = 0;
     for i = 1:length(f_eq)
         penalize_eq = penalize_eq +  p.*(f_eq(i).^2);
