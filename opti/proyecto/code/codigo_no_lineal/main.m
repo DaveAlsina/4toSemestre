@@ -5,6 +5,7 @@ n = 4;
 % de cultivos hay
 x = sym('x', [1 n]);
 assume(x>=1);
+assume(x,'real');
 
 %% seteo de variables iniciales y funcion objetivo
 
@@ -51,17 +52,32 @@ At = 200000;
 
 betas = [1.2  1  1.3  1.3];  
 
-% calculo de las restricciones para 
-b = betas.*(At./(n.*pi.*(r + r./10).^2));
+% calculo de las restricciones para las cantidades máximas que se pueden
+% plantar
+b1 = betas.*(At./(n.*pi.*(r + r./10).^2));
+
+% calculo de las restricciones para las cantidades mínimas de cierto arbol
+% que se pueden plantar
+b2 = [1 1 1 1];
+
 
 %% Calculo de las restricciones de igualdad y desigualdad
 
-% generación de la lista de restricciones de desigualdad
-ineq_constrain = [];
+% generación de la lista de restricciones de desigualdad que acotan 
+% superior mente al vector solución
+ineq_constraint_upper = [];
 
 for i = 1:n
-   ineq_constrain = [ineq_constrain x(i) - sym(b(i))];
-   %ineq_constrain = [ineq_constrain -x(i) + 1];
+   ineq_constraint_upper = [ineq_constraint_upper x(i) - sym(b1(i))];
+   
+end
+
+% generación de la lista de restricciones de desigualdad que acotan 
+% inferiormente al vector solución
+
+ineq_constraint_lower = [];
+for i = 1:n
+    ineq_constraint_lower = [ineq_constraint_lower -x(i) + 1];
 end
 
 % generación de la lista de restricciones de igualdad
@@ -100,11 +116,13 @@ tStartPar = tic;        % timer para medir tiempo de ejecucion que toma
 % se roba 5 hilos para hacer el trabajo
 p = parpool('local',5);
 
-parfor i = 1:ntrials
-    result(:, i) = metodo_penalizacion(f, eq_constrain, ineq_constrain, x, xstarts(:,i)', epsilon, interval, 100, verbose);
+parfor i = 1:2%ntrials
+    result(:, i) = metodo_penalizacion(f, eq_constrain, ineq_constraint_upper, ...
+                ineq_constraint_lower, x, xstarts(:,i)', b1, b2, epsilon, ...
+                interval, 100, verbose);
 end
          
-delete(gcp('nocreate'))
+delete(gcp('nocreate'));
 
 tEndPar = toc(tStartPar); % detiene el timer  
 
@@ -139,7 +157,9 @@ disp(At);
 %tStartSer = tic; % timer para medir tiempo de ejecucion que toma en serial
 
 %for i = 1:ntrials
-%    result(:, i) = metodo_penalizacion(f, eq_constrain, ineq_constrain, x, xstarts(:,i)', epsilon, interval, 100, verbose);
+%    result(:, i) = metodo_penalizacion(f, eq_constrain, ineq_constraint_upper, ...
+%                ineq_constraint_lower, x, xstarts(:,i)', b1, b2, epsilon, ...
+%                interval, 100, verbose);
 %end
 
 %tEndSer = toc(tStartSer);  % detiene el timer

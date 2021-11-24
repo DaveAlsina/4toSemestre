@@ -1,7 +1,10 @@
-function [x] = metodo_penalizacion(f_objetivo,f_eq, f_ineq, var, xstart, epsilon, interval, max_iters,verbose)
+function [x] = metodo_penalizacion(f_objetivo, f_eq, f_ineq_up, f_ineq_low, var, ...
+    xstart, constraints1, constraints2, epsilon, interval, max_iters,verbose)
 
-    %p = 10000000000000000000;
-    p = 100000;
+    p = 1000000;
+    
+    % se crea una sola función para la penalización por salir de la
+    % igualdad
     
     penalize_eq = 0;
     for i = 1:length(f_eq)
@@ -9,29 +12,10 @@ function [x] = metodo_penalizacion(f_objetivo,f_eq, f_ineq, var, xstart, epsilon
     end
 
 
-    penalize_ineq = 0;
-    for i = 1:length(f_ineq)
-       penalize_ineq = penalize_ineq + p.*(f_ineq(i).^2);     
-    end
-
-
-    q = f_objetivo + penalize_eq + penalize_ineq;
-    x =  gradientDescent(var, q, xstart, epsilon, interval, max_iters, verbose);
+     q = f_objetivo + penalize_eq;
+    
+    x =  gradientDescent(var, q, f_ineq_up, f_ineq_low, constraints1, constraints2, xstart, epsilon, interval, max_iters, verbose);
     x = double(x);
 
-    
-    
- %   
- %   fields = fieldnames(x_solved); % extract names of features
- %   solution = [];
-    
- %   for i = 1:length(fields)
-        
- %       expr = getfield(x_solved, fields{i});
- %       ans = limit(expr, p, inf);
- %       solution = [ solution ans];
- %   end
-    
-   % x = x_solved;
 
 end
