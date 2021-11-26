@@ -116,7 +116,7 @@ tStartPar = tic;        % timer para medir tiempo de ejecucion que toma
 % se roba 5 hilos para hacer el trabajo
 p = parpool('local',5);
 
-parfor i = 1:2%ntrials
+parfor i = 1:ntrials
     result(:, i) = metodo_penalizacion(f, eq_constrain, ineq_constraint_upper, ...
                 ineq_constraint_lower, x, xstarts(:,i)', b1, b2, epsilon, ...
                 interval, 100, verbose);

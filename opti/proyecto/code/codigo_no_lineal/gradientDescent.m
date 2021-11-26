@@ -62,7 +62,7 @@ constraints1, constraints2, xstart, epsilon, interval, max_iters, verbose)
     end
     
     grad =  gradient(f);        %función syms del gradiente
-    normGrad =  norm(f);        %función syms de la norma del gradiente
+    normGrad =  norm(grad);        %función syms de la norma del gradiente
 
     
     xprev_cell = num2cell(xstart);   %convierte a xstart a una celda 
@@ -159,7 +159,7 @@ constraints1, constraints2, xstart, epsilon, interval, max_iters, verbose)
     end
     
     grad =  gradient(f);        %función syms del gradiente
-    normGrad =  norm(f);        %función syms de la norma del gradiente
+    normGrad =  norm(grad);        %función syms de la norma del gradiente
     
     
     
@@ -227,7 +227,7 @@ constraints1, constraints2, xstart, epsilon, interval, max_iters, verbose)
         end
 
         grad =  gradient(f);        %función syms del gradiente
-        normGrad =  norm(f);        %función syms de la norma del gradiente
+        normGrad =  norm(grad);        %función syms de la norma del gradiente
         
     end
 
